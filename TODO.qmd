@@ -1,0 +1,44 @@
+---
+title: "TODO"
+format: html
+---
+
+-   cookiecutter: https://github.com/cookiecutter/cookiecutter
+
+    -   https://cloud.r-project.org/web/packages/cookiecutter/index.html
+
+-   All folder paths must be created by code (or table)
+
+-   Perhaps generalize a directory creation function
+
+-   No spaces
+
+-   Shorter names
+
+-   Translations
+
+-   R-files stored separately, and copied where appropriate
+
+-   Prompt: Data-folder? (often separated)
+
+-   Prompt: Saros?
+
+-   Change Saros to Reporting?
+
+-   Move saros to output?
+
+https://github.com/dnusinow/cookiecutter-targets-quarto-website/tree/main/%7B%7Bcookiecutter.project_id%7D%7D\_%7B%7Bcookiecutter.project_name%7D%7D
+
+https://github.com/Metuendus/cookiecutter_data_analysis
+
+https://github.com/alexkyllo/workbench-r
+
+https://github.com/associatedpress/cookiecutter-r-project
+
+https://github.com/jbusecke/cookiecutter-science-project
+
+https://github.com/crmne/cookiecutter-modern-datascience
+
+https://github.com/mkrapp/cookiecutter-reproducible-science
+
+https://github.com/drivendata/cookiecutter-data-science

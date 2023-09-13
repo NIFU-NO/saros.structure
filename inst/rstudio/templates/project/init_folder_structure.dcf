@@ -1,0 +1,36 @@
+Binding: init_folder_structure
+Title: Set Up Social Science Project Structure
+Subtitle: Makes a folder structure tailored towards the common practices associated with commissioned and free social science research, including a ready to use setup for the Saros system.
+OpenFiles: .Rproj
+
+Parameter: saros_folder
+Widget: CheckboxInput
+Label: Saros-folder?
+Default: On
+Position: left
+
+Parameter: non_saros_folders
+Widget: CheckboxInput
+Label: Include non-Saros folders?
+Default: On
+Position: left
+
+Parameter: r_files
+Widget: CheckboxInput
+Label: Include template R scripts?
+Default: On
+Position: left
+
+Parameter: readme_files
+Widget: CheckboxInput
+Label: Include readme-files?
+Default: On
+Position: left
+
+
+Parameter: main_folder_numbering
+Widget: CheckboxInput
+Label: Number main folders?
+Default: On
+Position: left
+
