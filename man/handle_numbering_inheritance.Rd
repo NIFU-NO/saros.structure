@@ -19,6 +19,8 @@ handle_numbering_inheritance(
 
 \item{numbering_prefix}{One of "none", "0", "00", "000", "max_observed"}
 
+\item{max_folder_count_digits}{Integer.}
+
 \item{parent_path}{String, path to parent folder}
 
 \item{parent_numbering}{String}

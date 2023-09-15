@@ -32,9 +32,13 @@ create_directory_structure(
 
 \item{numbering_parent_child_separator}{String. Defaults to word_separator.}
 
+\item{numbering_name_separator}{String. Separator between numbering part and name.}
+
 \item{case}{String. One of c("asis", "sentence", "lower", "upper", "title", "snake").}
 
-\item{create}{Boolean. Defaults to FALSE.}
+\item{replacement_list}{named character vector. Each name in this vector will be replaced with its `"{{value}}"` in the structure_path file}
+
+\item{create}{Boolean. Defaults to TRUE in initialize_saros_project(), FALSE in create_directory_structure().}
 
 \item{count_existing_folders}{Boolean. Defaults to FALSE.}
 }
