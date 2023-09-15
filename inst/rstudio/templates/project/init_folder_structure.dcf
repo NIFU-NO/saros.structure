@@ -1,36 +1,40 @@
-Binding: init_folder_structure
+Binding: initialize_saros_project
 Title: Set Up Social Science Project Structure
 Subtitle: Makes a folder structure tailored towards the common practices associated with commissioned and free social science research, including a ready to use setup for the Saros system.
 OpenFiles: .Rproj
 
-Parameter: saros_folder
-Widget: CheckboxInput
-Label: Saros-folder?
-Default: On
+Parameter: structure_path
+Widget: FileInput
+Label: YAML-file that lists directory structure. Default: internal setup (English)
 Position: left
 
-Parameter: non_saros_folders
-Widget: CheckboxInput
-Label: Include non-Saros folders?
-Default: On
+Parameter: word_separator
+Widget: SelectInput
+Label: Word separator
+Fields: NULL, '-', ' ', '_', ''
+Position: right
+
+Parameter: case
+Widget: SelectInput
+Label: Case conversion
+Fields: asis, sentence, title, lower, upper, snake
+Position: right
+
+Parameter: numbering_prefix
+Widget: SelectInput
+Label: Numbering prefix
+Default: none
+Fields: none, max_local, max_global
 Position: left
 
-Parameter: r_files
+Parameter: numbering_inheritance
 Widget: CheckboxInput
-Label: Include template R scripts?
 Default: On
-Position: left
+Label: Inherit numbering from parent folder(s)
+Position: right
 
-Parameter: readme_files
-Widget: CheckboxInput
-Label: Include readme-files?
-Default: On
-Position: left
-
-
-Parameter: main_folder_numbering
-Widget: CheckboxInput
-Label: Number main folders?
-Default: On
+Parameter: numbering_parent_child_separator
+Widget: TextInput
+Label: Separator b/w parent-child numbers. Default: space
 Position: left
 
