@@ -10,6 +10,8 @@ initialize_saros_project(
   numbering_prefix = c("none", "max_local", "max_global"),
   numbering_inheritance = TRUE,
   word_separator = NULL,
+  numbering_name_separator = " ",
+  replacement_list = NULL,
   numbering_parent_child_separator = word_separator,
   case = c("asis", "sentence", "title", "lower", "upper", "snake"),
   count_existing_folders = FALSE,
@@ -19,7 +21,8 @@ initialize_saros_project(
   r_optionals = TRUE,
   r_add_file_scope = TRUE,
   r_prefix_file_scope = "### ",
-  r_add_folder_scope_as_README = FALSE
+  r_add_folder_scope_as_README = FALSE,
+  create = TRUE
 )
 }
 \arguments{
@@ -33,6 +36,10 @@ initialize_saros_project(
 
 \item{word_separator}{String. Replace separators between words in folder names. Defaults to NULL.}
 
+\item{numbering_name_separator}{String. Separator between numbering part and name.}
+
+\item{replacement_list}{named character vector. Each name in this vector will be replaced with its `"{{value}}"` in the structure_path file}
+
 \item{numbering_parent_child_separator}{String. Defaults to word_separator.}
 
 \item{case}{String. One of c("asis", "sentence", "lower", "upper", "title", "snake").}
@@ -43,13 +50,19 @@ initialize_saros_project(
 
 \item{r_files_source_path}{String, path to where to find CSV-fiel containing the columns folder_name, folder_scope, file_name, file_scope. If NULL, defaults to system.file("templates", "r_files.csv")).}
 
-\item{r_add_folder_scope_as_README}{}
+\item{r_optionals}{Flag. Whether to add files marked as 1 (or TRUE) in the optional column. Defaults to TRUE.}
 
-\item{create}{Boolean. Defaults to FALSE.}
+\item{r_add_file_scope}{Flag. Whether to add value from column 'file_scope' to beginning of each file. Default to TRUE.}
+
+\item{r_prefix_file_scope}{String to add before file_scope. Defaults to "### "}
+
+\item{r_add_folder_scope_as_README}{Flag. Whether to create README file in each folder with the folder_scope column cell in r_files_source_path. Defaults to FALSE.}
+
+\item{create}{Boolean. Defaults to TRUE in initialize_saros_project(), FALSE in create_directory_structure().}
 }
 \description{
 Can be used programatically from the console, or simply use the New Project Wizard..
 }
 \examples{
-initialize_saros_project(path = getwd())
+initialize_saros_project(path = tempdir())
 }

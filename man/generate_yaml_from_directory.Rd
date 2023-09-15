@@ -21,5 +21,5 @@ generate_yaml_from_directory(
 Generate YAML File from Directory Structure
 }
 \examples{
-generate_yaml_from_directory()
+generate_yaml_from_directory(output_yaml_path = tempfile("_structure_en", fileext=".yaml"))
 }

@@ -3,6 +3,7 @@
 #' @param name String. Original folder name.
 #' @param case String. One of c("asis", "sentence", "lower", "upper", "title", "snake").
 #' @param word_separator String.
+#' @param replacement_list Character vector, named.
 #' @return String. Modified folder name.
 handle_naming_conventions <- function(name = "Journal manuscripts",
                                       case="asis",
@@ -64,6 +65,7 @@ handle_max_observed <- function(parent_path = getwd(), count_existing_folders = 
 #' @param parent_numbering String
 #' @param numbering_parent_child_separator String
 #' @param count_existing_folders Boolean
+#' @param max_folder_count_digits Integer.
 #'
 #' @return String
 handle_numbering_inheritance <- function(counter = 1,
@@ -208,7 +210,7 @@ create_directory_structure <- function(
 #' @return NULL
 #' @export
 #' @examples
-#' generate_yaml_from_directory()
+#' generate_yaml_from_directory(output_yaml_path = tempfile("_structure_en", fileext=".yaml"))
 generate_yaml_from_directory <- function(input_path = getwd(),
                                          output_yaml_path = "_structure_en.yaml",
                                          remove_prefix_numbers = FALSE) {

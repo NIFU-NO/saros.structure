@@ -17,6 +17,8 @@ handle_naming_conventions(
 \item{case}{String. One of c("asis", "sentence", "lower", "upper", "title", "snake").}
 
 \item{word_separator}{String.}
+
+\item{replacement_list}{Character vector, named.}
 }
 \value{
 String. Modified folder name.
