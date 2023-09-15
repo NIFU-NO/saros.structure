@@ -3,42 +3,60 @@
 #' Can be used programatically from the console, or simply use the New Project Wizard..
 #'
 #' @param path String, path to where to create the project files
-#' @param saros_folder Flag, defaults to TRUE. Whether to include the Saros system.
-#' @param non_saros_folders Flag, defaults to TRUE. Whether to include all the other folders.
-#' @param r_files Flag, defaults to TRUE. Whether to include template R files.
-#' @param readme_files Flag, defaults to TRUE. Whether to include assistance files.
-#' @param main_folder_numbering Flag, defaults to TRUE. Whether main folders are numbered. Adviced to leave on.
-#' @param word_separtor String, defaults to "_". to be inserted between all words to ensure valid path names.
+#' @param structure_path String. Path to the YAML file that defines the folder structure. Defaults to system.file("templates", "_structure_en.yaml").
+#' @param numbering_prefix String. One of c("none", "max_local", "max_global").
+#' @param numbering_inheritance Flag. Whether to inherit numbering from parent folder.
+#' @param word_separator String. Replace separators between words in folder names. Defaults to NULL.
+#' @param numbering_parent_child_separator String. Defaults to word_separator.
+#' @param case String. One of c("asis", "sentence", "lower", "upper", "title", "snake").
+#' @param create Boolean. Defaults to FALSE.
+#' @param count_existing_folders Boolean. Defaults to FALSE.
+#' @param r_files_source_path String, path to where to find CSV-fiel containing the columns folder_name, folder_scope, file_name, file_scope. If NULL, defaults to system.file("templates", "r_files.csv")).
+#' @param r_files_out_path String, path to where to place R placeholder files. If NULL, will not create any.
+#' @param r_numbering_inheritance
+#' @param r_numbering_parent_child_separator
+#' @param r_numbering_name_separator
+#' @param r_case
+#' @param r_add_folder_scope_as_README
 #'
 #' @return
 #' @export
 #'
-#' @examples init_folder_structure(path = getwd())
-init_folder_structure <- function(path,
-                                  saros_folder=TRUE,
-                                  non_saros_folders=TRUE,
-                                  r_files=TRUE,
-                                  readme_files=TRUE,
-                                  main_folder_numbering=TRUE,
-                                  word_separator = "_") {
+#' @examples initialize_saros_project(path = getwd())
+initialize_saros_project <-
+  function(path,
+           structure_path = NULL,
+           numbering_prefix = c("none", "max_local", "max_global"),
+           numbering_inheritance = TRUE,
+           word_separator = NULL,
+           numbering_parent_child_separator = word_separator,
+           case = c("asis", "sentence", "title", "lower", "upper", "snake"),
+           count_existing_folders = FALSE,
 
-  folder <- system.file("struct", package="saros.structure")
+           r_files_out_path = NULL,
+           r_files_source_path = system.file("templates", "r_files.csv", package="saros.structure"),
+           r_optionals = TRUE,
+           r_add_file_scope = TRUE,
+           r_prefix_file_scope = "### ",
+           r_add_folder_scope_as_README = FALSE) {
 
-  pattern <- c()
-  if(isFALSE(saros_folder)) pattern <- c(pattern, "5_SAROS/")
-  if(isFALSE(non_saros_folders)) pattern <- c(pattern, "^[12346789]_")
-  if(isFALSE(r_files)) pattern <- c(pattern, "\\.[Rr]$")
-  if(isFALSE(readme_files)) pattern <- c(pattern, "^[README]")
-  pattern <- stringi::stri_c(pattern, collapse="|", ignore_null=TRUE)
+    if(is.null(structure_path)) structure_path <- system.file("templates", "_structure_en.yaml")
 
-  main_folders <-
-    dir(path = folder, all.files = TRUE, full.names = FALSE,
-        recursive = TRUE, no.. = TRUE)
-  # if(isFALSE(saros_folder)) main_folders <- main_folders[main_folders != "5_SAROS"]
-  # if(isFALSE(non_saros_folders)) main_folders <- grep(pattern = "^[12346789]_", main_folders, invert = TRUE)
-
-  # lapply(main_folders, function(folder) {
-  #
-  # })
-    main_folders
+    create_directory_structure(path = path,
+                               structure_path = structure_path,
+                               numbering_prefix = numbering_prefix,
+                               numbering_inheritance = numbering_inheritance,
+                               word_separator = word_separator,
+                               numbering_parent_child_separator = numbering_parent_child_separator,
+                               case = case,
+                               create = TRUE,
+                               count_existing_folders = count_existing_folders)
+    if(!is.null(r_files_location)) {
+      create_r_files(r_files_out_path = r_files_out_path,
+                                                  r_files_source_path = r_files_source_path,
+                                                  optionals = optionals,
+                                                  add_file_scope = add_file_scope,
+                                                  prefix_file_scope = prefix_file_scope,
+                                                  add_folder_scope_as_README = add_folder_scope_as_README)
+    }
 }

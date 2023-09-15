@@ -1,7 +1,0 @@
----
-title: "Siste rapport"
-format: html
-editor: visual
----
-
-{{<include cycle2022H.qmd>}}
