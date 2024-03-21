@@ -60,16 +60,16 @@ handle_max_observed <- function(parent_path = getwd(), count_existing_folders = 
 #' Handle numbering inheritance
 #'
 #' @param counter digit
-#' @param numbering_prefix One of "none", "0", "00", "000", "max_observed"
-#' @param parent_path String, path to parent folder
-#' @param parent_numbering String
-#' @param numbering_parent_child_separator String
-#' @param count_existing_folders Boolean
-#' @param max_folder_count_digits Integer.
+#' @param numbering_prefix One of "none" (no zero-leading prefix), "max_global" (counts with leading zeroes matching the maximally observed items in any of the subfolders), "max_local" (same as max_global, but only considering the current folder of the item)
+#' @param parent_path String, path to parent folder.
+#' @param parent_numbering String, or NA. If not NA, adds the parent_numbering to the left side of the counter.
+#' @param numbering_parent_child_separator String, separates the parent number from the child number, if parent_numbering is not NA.
+#' @param count_existing_folders Flag. Whether to consider existing folders when counting. Defaults to FALSE.
+#' @param max_folder_count_digits Integer. The fixed width of the counting.
 #'
 #' @return String
 handle_numbering_inheritance <- function(counter = 1,
-                                         numbering_prefix = "none",
+                                         numbering_prefix = c("none", "max_global", "max_local"),
                                          max_folder_count_digits = 0,
                                          parent_path = "Journal manuscripts",
                                          parent_numbering = NA,
@@ -95,7 +95,7 @@ find_longest_list_length <- function(lst) {
   max_length <- 0
 
   for (item in lst) {
-    if (is.list(item)) {
+    if (is.list(item) && length(item)>0) {
       # Recursive call if the item is a list
       candidate_length <- find_longest_list_length(item)
     } else {
@@ -123,7 +123,7 @@ find_longest_list_length <- function(lst) {
 #' create_directory_structure()
 create_directory_structure <- function(
     path = getwd(),
-    structure_path = system.file("templates", "_structure_en.yaml", package = "saros.structure"),
+    structure_path = system.file("templates", "_project_structure_en.yaml", package = "saros.structure"),
     numbering_prefix = c("none", "max_local", "max_global"),
     numbering_inheritance = TRUE,
     word_separator = NULL,
@@ -140,11 +140,13 @@ create_directory_structure <- function(
   case <- rlang::arg_match(case)
   # Read the YAML file to get the folder structure
   folder_structure <- yaml::read_yaml(structure_path)
+  if(length(folder_structure)==0) cli::cli_abort("{.arg structure_path} has a zero-length list structure: {.file {structure_path}}.")
 
 
   if(numbering_prefix=="max_global") {
     max_folder_count_digits <- find_longest_list_length(folder_structure)
     max_folder_count_digits <- floor(log10(max_folder_count_digits))+1
+    if(max_folder_count_digits == -Inf) browser()
   } else {
     max_folder_count_digits <- 0
   }
@@ -198,53 +200,7 @@ create_directory_structure <- function(
 
   # Start the folder creation process
   create_folders_recursive(folder_list = folder_structure, parent_path = path)
+  invisible(folder_structure)
 }
 
-
-
-#' Generate YAML File from Directory Structure
-#'
-#' @param input_path String. The path to the directory whose structure needs to be captured.
-#' @param output_yaml_path String. The path where the YAML file will be saved.
-#' @param remove_prefix_numbers Boolean. Whether to remove numeric prefixes and any resulting leading non-alphanumeric characters from folder names. Defaults to FALSE.
-#' @return NULL
-#' @export
-#' @examples
-#' generate_yaml_from_directory(output_yaml_path = tempfile("_structure_en", fileext=".yaml"))
-generate_yaml_from_directory <- function(input_path = getwd(),
-                                         output_yaml_path = "_structure_en.yaml",
-                                         remove_prefix_numbers = FALSE) {
-  # Recursive function to traverse directory and build list
-  traverse_directory <- function(dir_path) {
-    folders <- list.dirs(dir_path, recursive = FALSE, full.names = FALSE)
-    folder_structure <- list()
-
-    for (folder in folders) {
-      # Remove numeric prefixes if required
-      folder_name <- if (remove_prefix_numbers) {
-        cleaned_name <- stringi::stri_replace_first_regex(folder, "^[0-9\\s_-]+", "")
-        if (stringi::stri_length(cleaned_name) == 0) {
-          folder  # Keep original name if cleaning results in an empty string
-        } else {
-          cleaned_name
-        }
-      } else {
-        folder
-      }
-
-      sub_path <- file.path(dir_path, folder)
-      if (file.info(sub_path)$isdir) {
-        folder_structure[[folder_name]] <- traverse_directory(sub_path)
-      }
-    }
-
-    return(folder_structure)
-  }
-
-  # Generate the folder structure list
-  folder_structure <- traverse_directory(input_path)
-
-  # Write to YAML file
-  yaml::write_yaml(folder_structure, output_yaml_path)
-}
 

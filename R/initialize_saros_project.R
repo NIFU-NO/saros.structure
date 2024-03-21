@@ -3,7 +3,7 @@
 #' Can be used programatically from the console, or simply use the New Project Wizard..
 #'
 #' @param path String, path to where to create the project files
-#' @param structure_path String. Path to the YAML file that defines the folder structure. Defaults to system.file("templates", "_structure_en.yaml").
+#' @param structure_path String. Path to the YAML file that defines the folder structure. Defaults to system.file("templates", "_project_structure_en.yaml").
 #' @param numbering_prefix String. One of c("none", "max_local", "max_global").
 #' @param numbering_inheritance Flag. Whether to inherit numbering from parent folder.
 #' @param word_separator String. Replace separators between words in folder names. Defaults to NULL.
@@ -44,17 +44,34 @@ initialize_saros_project <-
            r_add_folder_scope_as_README = FALSE,
            create = TRUE) {
 
-    if(is.null(structure_path)) structure_path <- system.file("templates", "_structure_en.yaml", package="saros.structure")
+    if(missing(structure_path) ||
+       !rlang::is_string(structure_path) ||
+       structure_path=="") structure_path <- system.file("templates", "_project_structure_en.yaml",
+                                                         package="saros.structure")
 
-    create_directory_structure(path = path,
+    if(rlang::is_string(word_separator) && word_separator=="NULL") word_separator <- NULL
+    word_separator <- stringi::stri_replace_all_fixed(word_separator, "'", "")
+    if(rlang::is_string(numbering_name_separator) && numbering_name_separator=="NULL") numbering_name_separator <- NULL
+    numbering_name_separator <- stringi::stri_replace_all_fixed(numbering_name_separator, "'", "")
+    if(rlang::is_string(numbering_parent_child_separator) && numbering_parent_child_separator=="NULL") numbering_parent_child_separator <- NULL
+    numbering_parent_child_separator <- stringi::stri_replace_all_fixed(numbering_parent_child_separator, "'", "")
+
+
+    folder_structure <-
+      create_directory_structure(path = path,
                                structure_path = structure_path,
                                numbering_prefix = numbering_prefix,
                                numbering_inheritance = numbering_inheritance,
                                word_separator = word_separator,
+                               numbering_name_separator = numbering_name_separator,
                                numbering_parent_child_separator = numbering_parent_child_separator,
                                case = case,
+                               replacement_list = replacement_list,
                                create = TRUE,
                                count_existing_folders = count_existing_folders)
+
+
+
     if(!is.null(r_files_out_path)) {
       create_r_files(r_files_out_path = r_files_out_path,
                      r_files_source_path = r_files_source_path,
@@ -62,5 +79,15 @@ initialize_saros_project <-
                      r_add_file_scope = r_add_file_scope,
                      r_prefix_file_scope = r_prefix_file_scope,
                      r_add_folder_scope_as_README = r_add_folder_scope_as_README)
+      # saros_path <-
+      #   unname(unlist(sapply(folder_structure, function(x) grep("saros", x = x, value = TRUE, ignore.case = TRUE))))
+      # if(length(saros_path)==1) {
+      #   saros_path <- dir(path = path, pattern = saros_path, full.names = TRUE, recursive = TRUE, ignore.case = TRUE, include.dirs = FALSE, no.. = TRUE)
+      #   usethis::create_project(path = paste0(path, .Platform$file.sep, saros_path))
+      # }
     }
+    new_folder_name <- stringi::stri_extract_last_regex(path, pattern = "([^/]+)$")
+    print(new_folder_name) # Only remove if folder is otherwise empty
+    # stuff_to_remove <- paste0(path, .Platform$file.sep, ".", c(new_folder_name, "Rproj"))
+    # unlink()
 }

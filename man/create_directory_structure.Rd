@@ -6,7 +6,7 @@
 \usage{
 create_directory_structure(
   path = getwd(),
-  structure_path = system.file("templates", "_structure_en.yaml", package =
+  structure_path = system.file("templates", "_project_structure_en.yaml", package =
     "saros.structure"),
   numbering_prefix = c("none", "max_local", "max_global"),
   numbering_inheritance = TRUE,
@@ -22,7 +22,7 @@ create_directory_structure(
 \arguments{
 \item{path}{String, path to where to create the project files}
 
-\item{structure_path}{String. Path to the YAML file that defines the folder structure. Defaults to system.file("templates", "_structure_en.yaml").}
+\item{structure_path}{String. Path to the YAML file that defines the folder structure. Defaults to system.file("templates", "_project_structure_en.yaml").}
 
 \item{numbering_prefix}{String. One of c("none", "max_local", "max_global").}
 

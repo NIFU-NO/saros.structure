@@ -48,10 +48,10 @@ Data:
     Codebook: []
   Sampling frame: []
   Registry data: []
-  Survey data:
-    Downloaded response data:
-      Codebook: []
-    Uploaded response lists: []
+  Collected respondent lists: []
+  Respondent list for survey system: []
+  Downloaded response data:
+    Codebook: []
   Qualitative data:
     Interview recordings: []
     Observational notes: []
@@ -60,13 +60,17 @@ Data:
   Prepared data:
     Codebooks: []
 Saros_{{project_initials}}:
-  Scripts:
-  Original draft generations:
+  Scripts: []
+  Resources: []
+  Draft generations:
     main: []
-  Drafts currently in editing:
+    Reports: []
+  Drafts in editing:
     main: []
-  Completed:
+    Reports: []
+  Completed drafts:
     main: []
+    Reports: []
 Publications:
   Paper1-Short title (author initials):
     Cover letter & response to reviewers: []
