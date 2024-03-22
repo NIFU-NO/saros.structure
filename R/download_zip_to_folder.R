@@ -3,15 +3,19 @@
 #' @param github_zip_url URL to zip file, as string.
 #' @param zip_path String, where to store zip-file. Defaults to a temporary location.
 #' @param out_path String, directory to where to store the unzipped files.
+#' @param files Character vector of files in zip-file to include. See `zip::unzip()`.
 #' @param overwrite Flag, whether to overwrite files in out_path. Defaults to FALSE.
-#'
+#' @param prompt Flag, whether to ask user if conflicting files should be overwritten, if any. Defaults to TRUE.
 #' @return Character vector of unzipped files.
 #' @export
+#' @importFrom fs dir_ls
+#' @importFrom zip unzip
+#' @importFrom utils download.file
 #'
 #' @examples
 #' download_zip_to_folder(
 #'    github_zip_url = "https://github.com/NIFU-NO/nifutemplates/archive/refs/heads/main.zip",
-#'    out_path = tempfolder())
+#'    out_path = tempdir(), overwrite=TRUE)
 download_zip_to_folder <-
   function(github_zip_url = "https://github.com/NIFU-NO/nifutemplates/archive/refs/heads/main.zip",
            zip_path = tempfile(fileext = ".zip"),
@@ -21,7 +25,7 @@ download_zip_to_folder <-
            overwrite = FALSE) {
 
     tmpfolder <- file.path(tempdir(), paste0(sample(letters, size = 5, replace = TRUE), collapse=""))
-    download.file(url = github_zip_url, destfile = zip_path, method = "auto", cacheOK = TRUE)
+    utils::download.file(url = github_zip_url, destfile = zip_path, method = "auto", cacheOK = TRUE)
     zip_temp_path <- zip::unzip(zipfile = zip_path, files = files, exdir = tmpfolder, junkpaths = FALSE, overwrite = TRUE)
     folder_in_temp_path <- fs::dir_ls(path = tmpfolder, recurse = FALSE, type = "directory")
     new_files <- fs::dir_ls(folder_in_temp_path, recurse = TRUE, type = "file", all = TRUE)

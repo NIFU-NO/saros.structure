@@ -18,7 +18,11 @@ download_zip_to_folder(
 
 \item{zip_path}{String, where to store zip-file. Defaults to a temporary location.}
 
+\item{files}{Character vector of files in zip-file to include. See `zip::unzip()`.}
+
 \item{out_path}{String, directory to where to store the unzipped files.}
+
+\item{prompt}{Flag, whether to ask user if conflicting files should be overwritten, if any. Defaults to TRUE.}
 
 \item{overwrite}{Flag, whether to overwrite files in out_path. Defaults to FALSE.}
 }
@@ -31,5 +35,5 @@ Wrapper to Download and Unzip a Github Repo to A Folder
 \examples{
 download_zip_to_folder(
    github_zip_url = "https://github.com/NIFU-NO/nifutemplates/archive/refs/heads/main.zip",
-   out_path = tempfolder())
+   out_path = tempdir(), overwrite=TRUE)
 }
