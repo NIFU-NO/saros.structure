@@ -12,7 +12,6 @@ create_r_files <- function(r_files_out_path,
                            r_add_file_scope = TRUE,
                            r_prefix_file_scope = "### ",
                            r_add_folder_scope_as_README = FALSE,
-
                            word_separator = NULL,
                            case = c("asis", "sentence", "title", "lower", "upper", "snake"),
 
@@ -50,6 +49,7 @@ create_r_files <- function(r_files_out_path,
 
 
   # Files stuff
+  counter <- 1
   for(i in seq_len(nrow(data))) {
     r_filepath <- file.path(r_files_out_path, paste0(data[i, "file_name"], ".R"))
     if(!file.exists(r_filepath)) cat(r_prefix_file_scope, data[i, "file_scope"], "\n", file = r_filepath)

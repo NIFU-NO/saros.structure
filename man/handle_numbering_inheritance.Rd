@@ -6,7 +6,7 @@
 \usage{
 handle_numbering_inheritance(
   counter = 1,
-  numbering_prefix = "none",
+  numbering_prefix = c("none", "max_global", "max_local"),
   max_folder_count_digits = 0,
   parent_path = "Journal manuscripts",
   parent_numbering = NA,
@@ -17,17 +17,17 @@ handle_numbering_inheritance(
 \arguments{
 \item{counter}{digit}
 
-\item{numbering_prefix}{One of "none", "0", "00", "000", "max_observed"}
+\item{numbering_prefix}{One of "none" (no zero-leading prefix), "max_global" (counts with leading zeroes matching the maximally observed items in any of the subfolders), "max_local" (same as max_global, but only considering the current folder of the item)}
 
-\item{max_folder_count_digits}{Integer.}
+\item{max_folder_count_digits}{Integer. The fixed width of the counting.}
 
-\item{parent_path}{String, path to parent folder}
+\item{parent_path}{String, path to parent folder.}
 
-\item{parent_numbering}{String}
+\item{parent_numbering}{String, or NA. If not NA, adds the parent_numbering to the left side of the counter.}
 
-\item{numbering_parent_child_separator}{String}
+\item{numbering_parent_child_separator}{String, separates the parent number from the child number, if parent_numbering is not NA.}
 
-\item{count_existing_folders}{Boolean}
+\item{count_existing_folders}{Flag. Whether to consider existing folders when counting. Defaults to FALSE.}
 }
 \value{
 String
