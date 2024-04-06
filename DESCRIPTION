@@ -1,7 +1,7 @@
 Package: saros.structure
 Type: Package
 Title: Template File and Folder Structure for Structured Social Science Research
-Version: 0.0.5
+Version: 0.0.6
 Authors@R: 
     person(given = "Stephan", 
            family = "Daus", 
