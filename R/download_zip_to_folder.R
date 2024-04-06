@@ -10,6 +10,7 @@
 #'   opens an assumed .Rproj-file in out_path after copying, or gives warning if
 #'   not found. Alternatively, a string (path) can be provided.
 #'   Defaults to file.path(out_path, ".Rproj") if such exists. Set to NULL or FALSE to ignore.
+#' @param newSession Flag. Whether to open new project in a new RStudio session. Defaults to TRUE.
 #' @return Character vector of unzipped files.
 #' @export
 #' @importFrom fs dir_ls
@@ -57,7 +58,8 @@ download_zip_to_folder <-
     copy_folder_contents_to_dir(from = folder_in_temp_path, to = out_path, overwrite = overwrite)
     if((isTRUE(open_project) || file.exists(file.path(out_path, ".Rproj")) ||
         (rlang::is_scalar_character(open_project) && file.exists(open_project))) &&
-       require("rstudioapi", character.only = TRUE)) {
+       requireNamespace("rstudioapi", character.only = TRUE) &&
+       interactive()) {
       rstudioapi::openProject(file.path(out_path, ".Rproj"), newSession = newSession)
     }
     out_path

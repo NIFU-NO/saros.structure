@@ -1,0 +1,35 @@
+---
+output: github_document
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+)
+```
+
+# saros.structure
+
+<!-- badges: start -->
+[![R-CMD-check](https://github.com/NIFU-NO/saros.structure/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/NIFU-NO/saros.structure/actions/workflows/R-CMD-check.yaml)
+<!-- badges: end -->
+
+The goal of saros.structure is to simplify setting up social science research projects.
+
+## Installation
+
+You can install the development version of saros.structure from [GitHub](https://github.com/) with:
+
+``` r
+# install.packages("devtools")
+devtools::install_github("NIFU-NO/saros.structure")
+```
+
+## Usage
+
+For now, only a Norwegian website shows how to use the package: https://saros.nifu.no/ 

@@ -4,12 +4,19 @@
 \alias{copy_folder_contents_to_dir}
 \title{Convenience Function to Copy Only the Contents of A Folder to Another Folder}
 \usage{
-copy_folder_contents_to_dir(from, to, overwrite = FALSE)
+copy_folder_contents_to_dir(
+  from,
+  to,
+  overwrite = FALSE,
+  only_copy_folders = FALSE
+)
 }
 \arguments{
 \item{to, from}{String, path from where to copy the contents, and where to copy them to.}
 
 \item{overwrite}{Flag. Defaults to FALSE.}
+
+\item{only_copy_folders}{Flag. Defaults to FALSE. If TRUE, only copies folders.}
 }
 \description{
 Convenience Function to Copy Only the Contents of A Folder to Another Folder
