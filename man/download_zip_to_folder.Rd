@@ -10,7 +10,9 @@ download_zip_to_folder(
   files = NULL,
   out_path = getwd(),
   prompt = TRUE,
-  overwrite = FALSE
+  overwrite = FALSE,
+  open_project = FALSE,
+  newSession = TRUE
 )
 }
 \arguments{
@@ -25,6 +27,11 @@ download_zip_to_folder(
 \item{prompt}{Flag, whether to ask user if conflicting files should be overwritten, if any. Defaults to TRUE.}
 
 \item{overwrite}{Flag, whether to overwrite files in out_path. Defaults to FALSE.}
+
+\item{open_project}{Flag or string. If FALSE (default), does nothing. If TRUE (requires {rstudioapi}-package),
+opens an assumed .Rproj-file in out_path after copying, or gives warning if
+not found. Alternatively, a string (path) can be provided.
+Defaults to file.path(out_path, ".Rproj") if such exists. Set to NULL or FALSE to ignore.}
 }
 \value{
 Character vector of unzipped files.
