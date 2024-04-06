@@ -1,7 +1,7 @@
 Package: saros.structure
 Type: Package
 Title: Template File and Folder Structure for Structured Social Science Research
-Version: 0.0.4
+Version: 0.0.5
 Authors@R: 
     person(given = "Stephan", 
            family = "Daus", 
@@ -20,6 +20,8 @@ Imports:
   fs,
   zip,
   yaml
+Suggests: 
+  rstudioapi
 Encoding: UTF-8
 RoxygenNote: 7.3.1
 URL: https://github.com/NIFU-NO/saros.structure
